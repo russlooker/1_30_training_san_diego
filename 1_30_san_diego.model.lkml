@@ -17,3 +17,4 @@ include: "*.dashboard.lookml"  # include all dashboards in this project
 #     sql_on: ${users.id} = ${orders.user_id} ;;
 #   }
 # }
+explore: dt {}
