@@ -63,7 +63,7 @@ view: order_items {
   dimension: sale_price {
     label: "1) Sale Price"
     type: number
-    sql: ${TABLE}.sale_price ;;
+    sql: ${TABLE}.sale_price  ;;
   }
 
   dimension_group: shipped_at {
@@ -89,6 +89,12 @@ view: order_items {
     type: number
     sql: ${TABLE}.user_id ;;
   }
+
+  measure: total_revenue {
+    type: sum
+    sql: ${sale_price} * 1.1 ;;
+  }
+
 
   measure: count {
     type: count
