@@ -92,7 +92,18 @@ view: order_items {
 
   measure: total_revenue {
     type: sum
+    value_format_name: usd
     sql: ${sale_price} * 1.1 ;;
+  }
+
+  measure: total_revenue_from_under_21 {
+    type: sum
+    sql: ${sale_price} ;;
+    value_format_name: usd
+    filters: {
+      field: users.can_drink
+      value: "no"
+    }
   }
 
 
