@@ -76,19 +76,28 @@ view: users {
     sql: ${TABLE}.last_name ;;
   }
 
-  dimension: latitude {
-    type: number
-    sql: ${TABLE}.latitude ;;
-  }
+  # dimension: latitude {
+  #   hidden: yes
+  #   type: number
+  #   sql: ${TABLE}.latitude ;;
+  # }
 
-  dimension: longitude {
-    type: number
-    sql: ${TABLE}.longitude ;;
+  # dimension: longitude {
+  #   hidden: yes
+  #   type: number
+  #   sql: ${TABLE}.longitude ;;
+  # }
+
+  dimension: location {
+    type: location
+    sql_latitude:  ${TABLE}.latitude ;;
+    sql_longitude:  ${TABLE}.longitude;;
   }
 
   dimension: state {
     type: string
     sql: ${TABLE}.state ;;
+    map_layer_name: us_states
   }
 
   dimension: traffic_source {

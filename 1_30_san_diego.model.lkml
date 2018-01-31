@@ -8,6 +8,10 @@ datagroup: nightly_etl {
   max_cache_age: "24 hours"
 }
 
+# map_layer: canadian_regions {
+
+# }
+
 persist_for: "24 hours"
 
 explore: order_items {

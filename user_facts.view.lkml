@@ -5,15 +5,22 @@ view: user_facts {
         ,sum(OI.sale_price) as lifetime_revenue
       FROM
         order_items OI
+      WHERE
+        1=1
+        AND {% condition inner_limit %} OI.created_at {% endcondition %}
       GROUP BY 1
        ;;
-    sql_trigger_value:  select current_date;;
+    # sql_trigger_value:  select current_date;;
 #     persist_for: "24 hours"
 #  datagroup_trigger: nightly_etl
 
-sortkeys: ["user_id"]
-distribution_style: even
+# sortkeys: ["user_id"]
+# distribution_style: even
 
+  }
+
+  filter: inner_limit {
+    type: date
   }
 
   measure: count {

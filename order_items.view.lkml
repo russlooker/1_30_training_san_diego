@@ -135,6 +135,12 @@ view: order_items {
        ${sale_price_normal}
       {% endif %}
     ;;
+    link: {
+      icon_url: "http://looker.com/favicon.ico"
+      url: "/explore/1_30_san_diego/order_items?fields=order_items.count,order_items.revenue_share_under_21,order_items.total_revenue,order_items.total_revenue_from_under_21,order_items.user_id&sorts=order_items.count+desc&limit=500"
+      label: "other drill"
+    }
+    # drill_fields: [detail*,-created_time]
   }
 
   measure: total_revenue_from_under_21 {
@@ -145,12 +151,14 @@ view: order_items {
       field: users.can_drink
       value: "no"
     }
+    drill_fields: [detail*]
   }
 
   measure: revenue_share_under_21 {
     type: number
     sql:  ${total_revenue_from_under_21} * 1.0 / nullif(${total_revenue},0) ;;
     value_format_name: percent_2
+    drill_fields: [detail*]
   }
 
 
@@ -160,6 +168,11 @@ view: order_items {
 
   measure: count {
     type: count
-    drill_fields: [id]
+    drill_fields: [detail*]
   }
+
+  set: detail {
+    fields: [id, sale_price, users.first_name, users.last_name, created_date]
+  }
+
 }
