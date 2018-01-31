@@ -12,6 +12,12 @@ view: users {
     sql: ${TABLE}.age ;;
   }
 
+  measure: avg_age {
+    type: average
+    sql: ${age} ;;
+    value_format_name: decimal_2
+  }
+
   dimension: age_groups {
     type: tier
     style: integer

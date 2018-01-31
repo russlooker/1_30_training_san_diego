@@ -7,6 +7,14 @@ view: order_items {
     sql: ${TABLE}.id ;;
   }
 
+# Example composite primary key
+#   dimension: pk {
+#     type: string
+#     sql:  ${id} || '-' || ${user_id};;
+#   primary_key: yes
+#   }
+
+
   dimension_group: created {
     type: time
     timeframes: [
@@ -63,7 +71,7 @@ view: order_items {
   dimension: sale_price {
     label: "1) Sale Price"
     type: number
-    sql: ${TABLE}.sale_price  ;;
+    sql: ${TABLE}.sale_price *.85 ;;
   }
 
   dimension_group: shipped_at {
@@ -93,7 +101,7 @@ view: order_items {
   measure: total_revenue {
     type: sum
     value_format_name: usd
-    sql: ${sale_price} * 1.1 ;;
+    sql: ${sale_price}  ;;
   }
 
   measure: total_revenue_from_under_21 {
@@ -105,6 +113,16 @@ view: order_items {
       value: "no"
     }
   }
+
+  measure: revenue_share_under_21 {
+    type: number
+    sql: ${total_revenue_from_under_21} * 1.0 / nullif(${total_revenue},0) ;;
+    value_format_name: percent_2
+  }
+
+
+
+
 
 
   measure: count {
