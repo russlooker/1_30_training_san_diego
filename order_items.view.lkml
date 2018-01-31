@@ -74,6 +74,13 @@ view: order_items {
     sql: ${TABLE}.sale_price *.85 ;;
   }
 
+  dimension: sale_price_normal {
+    label: "1) Sale Price"
+    type: number
+    sql: ${TABLE}.sale_price ;;
+  }
+
+
   dimension_group: shipped_at {
     type: time
     timeframes: [
@@ -101,7 +108,13 @@ view: order_items {
   measure: total_revenue {
     type: sum
     value_format_name: usd
-    sql: ${sale_price}  ;;
+    sql:
+      {% if _user_attributes["email"] == "russell@looker.com" %}
+       ${sale_price}
+      {% else %}
+       ${sale_price_normal}
+      {% endif %}
+    ;;
   }
 
   measure: total_revenue_from_under_21 {
@@ -116,7 +129,7 @@ view: order_items {
 
   measure: revenue_share_under_21 {
     type: number
-    sql: ${total_revenue_from_under_21} * 1.0 / nullif(${total_revenue},0) ;;
+    sql:  ${total_revenue_from_under_21} * 1.0 / nullif(${total_revenue},0) ;;
     value_format_name: percent_2
   }
 
