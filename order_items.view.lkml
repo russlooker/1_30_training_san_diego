@@ -3,6 +3,7 @@ view: order_items {
 
   dimension: id {
     primary_key: yes
+    hidden: yes
     type: number
     sql: ${TABLE}.id ;;
   }
@@ -100,16 +101,35 @@ view: order_items {
     sql: ${TABLE}.status ;;
   }
 
+  dimension: hello {
+    hidden: yes
+    type: string
+    sql: 1 ;;
+    html:
+    Hello, {{ _user_attributes["first_name"] }} !
+    ;;
+  }
+
+
+
   dimension: user_id {
     type: number
     sql: ${TABLE}.user_id ;;
+#     html:
+#     <p> <a href="/dashboards/923?User%20ID={{value}}">{{ value }} </a></p>
+#     ;;
+    link: {
+      label: "Go to Personal Dashboard for {{ users.first_name }}"
+      url: "/dashboards/1_30_san_diego::130_training?User%20ID={{value}}"
+      icon_url: "http://looker.com/favicon.ico"
+    }
   }
 
   measure: total_revenue {
     type: sum
     value_format_name: usd
     sql:
-      {% if _user_attributes["email"] == "russell@looker.com" %}
+      {% if status._in_query %}
        ${sale_price}
       {% else %}
        ${sale_price_normal}

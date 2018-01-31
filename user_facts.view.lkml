@@ -36,6 +36,9 @@ distribution_style: even
   }
 
   measure: average_lifetime_revenue {
+    label: "Average Spend"
+    view_label: "Ordering Users"
+    description: "This is the average revenue for all time on a per user basis"
     type: average
     value_format_name: usd
     sql:  ${lifetime_revenue} ;;

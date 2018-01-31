@@ -11,9 +11,11 @@ datagroup: nightly_etl {
 persist_for: "24 hours"
 
 explore: order_items {
+  label: "Online Transactions"
 #   fields: [ALL_FIELDS*,-order_items.total_revenue_from_under_21_custom, -order_items.total_revenue_from_under_21]
   persist_with: nightly_etl
   join: users {
+    view_label: "Ordering Users"
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;
     relationship: many_to_one
