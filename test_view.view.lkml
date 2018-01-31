@@ -6,6 +6,11 @@ view: test_view {
     UNION ALL
     select 'B',2;;
   }
+  dimension: id {
+    description: "ID"
+    type: string
+    sql: ${TABLE}.id ;;
+  }
   dimension: amount {
     description: "amount"
     type: number
